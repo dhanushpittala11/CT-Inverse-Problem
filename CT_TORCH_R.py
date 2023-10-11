@@ -1,20 +1,7 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[1]:
-
 
 from platform import python_version
 
-
-# In[2]:
-
-
 python_version()
-
-
-# In[3]:
-
 
 from PIL import Image
 import numpy as np
@@ -34,41 +21,15 @@ import argparse
 import os
 import torch.nn as nn
 import torch.nn.functional as F
-
 import gzip
 from skimage.metrics import structural_similarity as ssim
 import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
 import cv2
 from torchsummary import summary
-
-
-# In[4]:
-
-
 import torch
-
-
-# In[5]:
-
-
-torch.cuda.device_count()
-
-
-# In[6]:
-
-
 import time
-
-
-# In[7]:
-
-
 from pytorch_msssim import ssim
-
-
-# In[8]:
-
 
 FBP_BATCH1_DIR= "/home/bm20btech11004/CT_IMAGE_RECONSTRUCTION/Data/FBP/FBP128_batch1.npy.gz"
 PHANTOM_BATCH1_DIR= "/home/bm20btech11004/CT_IMAGE_RECONSTRUCTION/Data/Phantom/Phantom_batch1.npy.gz"
@@ -79,15 +40,7 @@ PHANTOM_BATCH3_DIR= "/home/bm20btech11004/CT_IMAGE_RECONSTRUCTION/Data/Phantom/P
 FBP_BATCH4_DIR= "/home/bm20btech11004/CT_IMAGE_RECONSTRUCTION/Data/FBP/FBP128_batch4.npy.gz"
 PHANTOM_BATCH4_DIR= "/home/bm20btech11004/CT_IMAGE_RECONSTRUCTION/Data/Phantom/Phantom_batch4.npy.gz"
 
-
-# In[10]:
-
-
 p= np.random.choice(np.arange(0, 1000), size=600, replace=False)
-
-
-# In[11]:
-
 
 with gzip.open(FBP_BATCH1_DIR,'rb') as f1:
     fbp1= np.load(f1,allow_pickle=True)
@@ -106,15 +59,7 @@ with gzip.open(FBP_BATCH4_DIR,'rb') as f4:
     fbp4_r= fbp4[p,:,:]
     del fbp4
 
-
-# In[13]:
-
-
 fbp= np.vstack((fbp1_r,fbp2_r,fbp3_r,fbp4_r))
-
-
-# In[14]:
-
 
 with gzip.open(PHANTOM_BATCH1_DIR,'rb') as p1:
     phantom1= np.load(p1,allow_pickle=True)
@@ -133,28 +78,12 @@ with gzip.open(PHANTOM_BATCH4_DIR,'rb') as p4:
     phantom4_r= phantom4[p,:,:]
     del phantom4
 
-
-# In[15]:
-
-
 phantom= np.vstack((phantom1_r,phantom2_r,phantom3_r,phantom4_r))
-
-
-# In[16]:
-
 
 del fbp1_r,fbp2_r,fbp3_r,fbp4_r
 del phantom1_r,phantom2_r,phantom3_r,phantom4_r
 
-
-# In[17]:
-
-
 x,y= [fbp,phantom]
-
-
-# In[18]:
-
 
 import sys
 def sizeof_fmt(num, suffix='B'):
@@ -169,73 +98,29 @@ for name, size in sorted(((name, sys.getsizeof(value)) for name, value in list(
                           locals().items())), key= lambda x: -x[1])[:10]:
     print("{:>30}: {:>8}".format(name, sizeof_fmt(size)))
 
-
-# In[19]:
-
-
 x_=np.zeros((x.shape[0],512,512))
 y_= np.zeros((y.shape[0],512,512))
-
-
-# In[20]:
-
 
 for i in range(len(x)):
     x_[i]= x[i]
     y_[i]= y[i]
-#     x_[i]= cv2.resize(x[i,:,:],(256,256))
+    # x_[i]= cv2.resize(x[i,:,:],(256,256))        
 #     y_[i]=cv2.resize(y[i],(256,256))
 
-
-# In[21]:
-
-
 plt.imshow(x_[0],cmap='gray')
-
-
-# In[22]:
-
 
 x_=x_.reshape((x_.shape[0],1,512,512))
 y_=y_.reshape((y_.shape[0],1,512,512))
 
-
-# In[23]:
-
-
 # seperating the test set from the dataset
 X,x_test, Y,y_test = train_test_split(x_,y_,test_size= 0.025)
-
-
-# In[24]:
-
-
-len(X)
-
-
-# In[25]:
-
 
 # seperating the traiining set and validation set
 x_train,x_val, y_train,y_val= train_test_split(X,Y,test_size= 0.18,random_state= 42)
 
-
-# In[26]:
-
-
-len(x_train)
-
-
-# In[27]:
-
-
 transform = transforms.Compose([
     transforms.ToTensor(),  # Convert PIL Image to tensor
 ])
-
-
-# In[28]:
-
 
 class CustomDataset(Dataset):
     def __init__(self, data, targets):
@@ -250,31 +135,13 @@ class CustomDataset(Dataset):
     def __len__(self):
         return len(self.data)
 
-
-# In[29]:
-
-
 train_dataset= CustomDataset(x_train,y_train)
 val_dataset= CustomDataset(x_val,y_val)
 test_dataset= CustomDataset(x_test,y_test)
 
-
-# In[30]:
-
-
 train_dataloader = torch.utils.data.DataLoader(train_dataset, batch_size=4, shuffle=True, num_workers=1)
 val_dataloader= torch.utils.data.DataLoader(val_dataset, batch_size=4, shuffle=True, num_workers=1)
 test_dataloader= torch.utils.data.DataLoader(test_dataset, batch_size=4, shuffle=True, num_workers=1)
-
-
-# In[ ]:
-
-
-
-
-
-# In[29]:
-
 
 # RESUNET
 class ResidualConv(nn.Module):
@@ -378,10 +245,6 @@ class ResUnet(nn.Module):
         output = self.output_layer(x9)
         output= x-output
         return output
-
-
-# In[31]:
-
 
 # FBP Conv NET
 class FirstBlock(nn.Module):
@@ -519,45 +382,17 @@ class UNet(nn.Module):
 
         return x10
 
-
-# In[32]:
-
-
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-
-
-# In[33]:
-
-
-device
-
-
-# In[36]:
-
 
 if torch.cuda.device_count() > 1:
     model = nn.DataParallel(model)
 
 
-# In[35]:
-
-
 model= UNet(1,1)
-
-
-# In[37]:
-
 
 model.to(device)
 
-
-# In[38]:
-
-
 summary(model, input_size=(1, 512, 512))
-
-
-# In[39]:
 
 
 # torch.cuda.list_gpu_processes(device=None)
@@ -566,29 +401,15 @@ summary(model, input_size=(1, 512, 512))
 torch.cuda.memory_allocated(device=None)
 
 
-# In[37]:
-
-
 get_ipython().system('pip install pynvml')
-
-
-# In[40]:
 
 
 patience = 5  # Number of epochs to wait for improvement
 counter = 0  # Counter to track epochs without improvement
 
-
-# In[41]:
-
-
-epochs = 60
+chs = 60
 opt_func = torch.optim.Adam(model.parameters(),lr=0.001)
 lr = 0.01
-
-
-# In[ ]:
-
 
 # def fit(epochs, lr, model, train_loader, val_loader, opt_func):
 st_time= time.perf_counter()
@@ -641,18 +462,11 @@ end_time= time.perf_counter
 # ex_time= end_time-st_time
 # print("The time for Training: ",ex_time)
 
-
-# In[2]:
-
-
 t_loss= np.zeros((epochs))
 v_loss= np.zeros((epochs))
 for i in range(epochs):
     t_loss[i]= train_loss[i].cpu().detach().numpy()
     v_loss[i]= val_loss[i].cpu().detach().numpy()
-
-
-# In[65]:
 
 
 fig,axs= plt.subplots(1,2,figsize=(18,5))
@@ -663,10 +477,6 @@ axs[1].plot(np.arange(1,51),v_loss)
 axs[1].set_title("Validation Loss")
 
 plt.show()
-
-
-# In[71]:
-
 
 with torch.no_grad():
     for batch in test_dataloader:
@@ -712,9 +522,6 @@ with torch.no_grad():
             ax[2].set_title('Ground Truth')
 
 
-# In[68]:
-
-
 def calculate_rmse(image1, image2):
     image1_array = np.array(image1)
     image2_array = np.array(image2)
@@ -726,10 +533,6 @@ def calculate_rmse(image1, image2):
     rmse = np.sqrt(mse)
     
     return rmse
-
-
-# In[69]:
-
 
 s1=[]
 # s2=[]
@@ -767,10 +570,6 @@ with torch.no_grad():
 # print("The average SSIM between the groundtruth and the reconstructed images is :",np.mean(t1))
 # print("The average RMSE between the groundtruth and the reconstructed images is :",np.mean(u1))
 
-
-# In[70]:
-
-
 t1= np.zeros((len(s1)))
 u1=np.zeros((len(r1)))
 for i in range(len(t1)):
@@ -778,10 +577,4 @@ for i in range(len(t1)):
     u1[i]=r1[i].numpy()
 print("The average SSIM between the groundtruth and the reconstructed images is :",np.mean(t1))
 print("The average RMSE between the groundtruth and the reconstructed images is :",np.mean(u1))
-
-
-# In[ ]:
-
-
-
 
