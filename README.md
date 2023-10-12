@@ -33,6 +33,6 @@ To the above architecture I added one residual block each in encoder and decoder
 #### 1.1.3  Reconstructed Images
 
 ![](ResUnet_Img1.png)
-![](ResUnet_Img2.png)
+![](ResUnet_img2.png)
 
-Above are the reconstructed images using ResUnet architecture. The Images look too similar to groundtruth images.
+**Above are the reconstructed images using ResUnet architecture. The Images look too similar to groundtruth images except for few constrast differences which can be corrected by constrast enhancement techniques. The Goal here is to know how much the deep learning models are able to learn from the data and are able to reconstruct the images.**
