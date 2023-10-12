@@ -8,3 +8,13 @@ The Data that I used consists of 4000 Image pairs, where each pair has True Brea
 ## **1. RESUNET:**
 
 ### 1.1 Architecture
+#### 1.1.1 Basic Buidling Block
+
+ Residual units consists of:
+ * Two 3x3 convolutional block.
+ * A Skip Connection from the input to the output of the residual block.
+
+ Convolutional block consists of:
+ * One Batch Normalization layer.
+ * One ReLU Activation layer.
+ * One Convolutional layer.
