@@ -36,3 +36,13 @@ To the above architecture I added one residual block each in encoder and decoder
 ![](ResUnet_img2.png)
 
 **Above are the reconstructed images using ResUnet architecture. The Images look too similar to groundtruth images except for few constrast differences which can be corrected by constrast enhancement techniques. The Goal here is to know how much the deep learning models are able to learn from the data and are able to reconstruct the images.**
+
+**Next architecture that I used was FBPCONVNET**
+
+## 2.FBPConvNet
+
+### 2.1 Architecture
+
+The architecture of FBPConvNet is similar to that of ResUnet except for the additional skip connection between the input layer to the output layer in FBPConvNet.
+
+![](FBP_convnet_Archtimg.png)
