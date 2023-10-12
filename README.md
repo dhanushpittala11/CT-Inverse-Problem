@@ -5,4 +5,4 @@ Computed Tomography is a diagnostic imaging technology that uses x-rays to measu
 
 The Data that I used consists of 4000 Image pairs, where each pair has True Breast Phantom image and its 128-view FBP reconstructed counterpart. ResUNet is the first Architecture that we used.
 
-#**1. RESUNET:**
+# **1. RESUNET:**
