@@ -22,6 +22,10 @@ The Data that I used consists of 4000 Image pairs, where each pair has True Brea
  ![Residual Block](Convolutional_block_RESUNET.png)
  Figure(b) is the residual block.
 
- #### 1.1.2 Entire Architecture
+#### 1.1.2 Entire Architecture
 
- 
+![Entire Architecture](ResUNET_original_architecture.png)
+
+The figure above shows the  architecture of the RESUNET. It consists of Encoding, Bridge and Decoding Parts. 
+
+To the above architecture I added one residual block each in encoder and decoder parts and implemented it in this project. 
