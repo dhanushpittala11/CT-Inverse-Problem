@@ -48,3 +48,9 @@ The architecture of FBPConvNet is similar to that of ResUnet except for the addi
 ![](FBP_convnet_Archtimg.gif)
 
 You can notice the additional skip connection right from the input to the output in the above figure.
+
+## Loss Function
+
+I used SSIM loss. SSIM stands for Structural Similarity Index and is a perceptual metric to measure similarity of two images. Commonly used loss functions such as L2 (Euclidean Distance) correlate poorly with image quality because they assume pixel-wise independance. For instance blurred images cause large perceptual but small L2 loss.
+
+SSIM takes into account luminance, contrast and structure and is computed as follows:
