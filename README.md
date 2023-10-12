@@ -61,3 +61,10 @@ The loss is computes as:
 ![](ssimLoss_img2.png)
 
 where p represents a pixel of an image.
+
+## References
+
+* (https://arxiv.org/pdf/2005.10755.pdf)
+* (https://arxiv.org/pdf/1611.03679.pdf)
+* (https://arxiv.org/pdf/1711.10684.pdf)
+* (https://ece.uwaterloo.ca/~z70wang/publications/SPM09.pdf)
