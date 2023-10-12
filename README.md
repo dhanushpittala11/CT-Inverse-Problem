@@ -54,3 +54,10 @@ You can notice the additional skip connection right from the input to the output
 I used SSIM loss. SSIM stands for Structural Similarity Index and is a perceptual metric to measure similarity of two images. Commonly used loss functions such as L2 (Euclidean Distance) correlate poorly with image quality because they assume pixel-wise independance. For instance blurred images cause large perceptual but small L2 loss.
 
 SSIM takes into account luminance, contrast and structure and is computed as follows:
+![](ssimLoss_img.png)
+
+The loss is computes as:
+
+![](ssimLoss_img2.png)
+
+where p represents a pixel of an image.
