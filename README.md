@@ -45,4 +45,6 @@ To the above architecture I added one residual block each in encoder and decoder
 
 The architecture of FBPConvNet is similar to that of ResUnet except for the additional skip connection between the input layer to the output layer in FBPConvNet.
 
-![](FBP_convnet_Archtimg.png)
+![](FBP_convnet_Archtimg.gif)
+
+You can notice the additional skip connection right from the input to the output in the above figure.
