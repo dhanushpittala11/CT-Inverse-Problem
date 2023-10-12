@@ -3,7 +3,7 @@ Computed Tomography is a diagnostic imaging technology that uses x-rays to measu
 
 **This is a research project under the guidance of Dr C.S. Sastry at Indian Institute of Technology, Hyderabad. We investigate the potential and performance of deep learning algorithms to reconstruct CT Images and observe if they can outperform the current traditional state of the art techniques.**
 
-The Data that I used consists of 4000 Image pairs, where each pair has True Breast Phantom image and its 128-view FBP reconstructed counterpart. ResUNet is the first Architecture that we used.
+The Data that I used consists of 4000 Image pairs, where each pair has True Breast Phantom image and its 128-view FBP reconstructed counterpart. ResUNet is the first Architecture that we used. The code for this project can be found [here](https://github.com/dhanushpittala11/CT-Inverse-Problem/blob/2abccd50bd16fcd0141b68d43a950ca9a1117b43/CT_TORCH_R.ipynb)
 
 ## **1. RESUNET:**
 
