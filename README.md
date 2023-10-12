@@ -18,3 +18,10 @@ The Data that I used consists of 4000 Image pairs, where each pair has True Brea
  * One Batch Normalization layer.
  * One ReLU Activation layer.
  * One Convolutional layer.
+   
+ ![Residual Block](Convolutional_block_RESUNET.png)
+ Figure(b) is the residual block.
+
+ #### 1.1.2 Entire Architecture
+
+ 
