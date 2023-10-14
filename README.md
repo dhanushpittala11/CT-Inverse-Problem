@@ -48,6 +48,8 @@ The architecture of FBPConvNet is similar to that of ResUnet except for the addi
 ![](FBP_convnet_Archtimg.gif)
 
 You can notice the additional skip connection right from the input to the output in the above figure.
+### 2.2 Reconstructed Images
+
 
 ## Loss Function
 
