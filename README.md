@@ -50,6 +50,9 @@ The architecture of FBPConvNet is similar to that of ResUnet except for the addi
 You can notice the additional skip connection right from the input to the output in the above figure.
 ### 2.2 Reconstructed Images
 
+![](FBPConvNet_img1.png)
+
+The Reconstructed image is similar to the groundtruth image except for the contrast which can be improved by some contrast enhancement techniques.
 
 ## Loss Function
 
